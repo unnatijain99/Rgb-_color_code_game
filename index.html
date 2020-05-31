@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: black;
+            margin: 0;
+            padding: 0;
+        }
+        .square{
+            background: black;
+            padding-bottom: 20%;
+            margin: 2%;
+            width: 20%;
+            
+        }
+        .row{
+            display: flex;
+        }
+        .container{
+            margin-left: 20%;
+        }
+        h1{
+            text-align: center;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        #motivate{
+            color: steelblue;
+            margin: 0 auto;
+        }
+        .yeah{
+            text-align: center;
+            background: white;
+        }
+       
+        button{
+            background: none;
+            outline: none;
+            color:steelblue;
+            margin: 0;
+            padding: 0;
+        }
+        .selected{
+            background: steelblue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>the <span id="aim">rgb(255,0,0)</span> color game</h1>
+    <div class="yeah">
+        <button id="newColor">New Colors</button>
+        <span id="motivate"></span>
+        <button class="abc">Easy</button>
+        <button class="abc selected">Hard</button>
+    </div>
+    <div class="container">
+        <div class="row">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        </div>
+        <div class="row">
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+    </div>
+
+
+    <script>
+        var colors = randomColorPicker(6);
+        var num;
+        var squares=document.querySelectorAll(".square");
+        var aim= document.querySelector("#aim");
+        var motivate= document.querySelector("#motivate");
+        var correctColor=randomColor(6);
+        var h1= document.querySelector("h1");
+        var newColor=document.querySelector("#newColor");
+        var easy=document.querySelector("#easy");
+        var hard=document.querySelector("#hard");
+        var modes=document.querySelectorAll(".abc");
+    
+        aim.textContent=correctColor;
+        h1.style.background="steelblue";
+
+        for(var i=0 ; i<squares.length; i++)
+        {
+            squares[i].addEventListener("click",function(){
+              if(this.style.background===correctColor){
+               changeColor(this.style.background);
+               motivate.textContent="correct!"
+               newColor.textContent="Play Again?";
+               h1.style.background=correctColor;
+               }
+              else{
+              this.style.background= "black";
+              motivate.textContent="Try again!"
+              }
+            })
+        }
+
+        function changeColor(abc){
+          for(var i=0; i<squares.length; i++){
+              squares[i].style.background=abc;
+          }
+        }
+
+        function randomColor(num){
+            num=num+1;
+            var a= Math.floor(Math.random()*num);
+            return colors[a];
+        }
+
+        function randomColorPicker(num){
+            var arr=[];
+            for(var i=1; i<=num; i++){
+                arr.push(generateRandom());
+            }
+            return arr;
+        }
+
+        function generateRandom(){
+            var r=Math.floor(Math.random()*256);
+            var g=Math.floor(Math.random()*256);
+            var b=Math.floor(Math.random()*256);
+            return "rgb(" + r + ", " + g + ", " + b + ")";
+        }
+
+        newColor.addEventListener("click",function(){
+            gen()
+            for(var i=0; i<squares.length; i++){
+                squares[i].style.background=colors[i];
+            }
+        })
+
+        for(var i=0; i< modes.length; i++){
+            modes[i].addEventListener("click",function(){
+                modes[0].classList.remove("selected");
+                modes[1].classList.remove("selected");
+                this.classList.add("selected");
+                this.textContent=="Easy" ? num=3 : num=6 ;
+                reset();
+            })
+        }
+
+        function reset(){
+            gen();
+            for(var i=0; i<squares.length; i++){
+                if(colors[i]){
+                squares[i].style.background=colors[i];
+                squares[i].style.display="block";
+                }
+                else{
+                    squares[i].style.display="none";
+                }
+            }
+        }
+        function gen(){
+            newColor.textContent="new colors";
+            h1.style.background="steelblue"
+            motivate.textContent="";
+            colors=randomColorPicker(num);
+            correctColor=randomColor(num);
+            aim.textContent=correctColor;
+        }
+     
+    </script>
+</body> 
+</html>
