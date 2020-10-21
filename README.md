@@ -1,2 +1,2 @@
-<div align="center> # Rgb_ColorCode_Game </div>
+<div align="center"> # Rgb_ColorCode_Game </div>
 
